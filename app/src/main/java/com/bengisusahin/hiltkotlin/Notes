@@ -1,0 +1,37 @@
+Dependency Injection
+
+        val instrument = Instrument()
+        val band = Band()
+        var james = Musician(instrument, band)
+        james.sing()
+
+        Enstrümanın içinde de custom sınıflar olsaydı, band in içinde de custom sınıflar olsaydı sırf musician sınıfımın sing fonksiyonunu
+        test etmek için 50 satır kod yazmamız gerekecekti. Bütün bu instance olusturma islemlerini otomatik yapan bir kutuphane
+        olsaydı ve tek yapmamız gereken şey sadece james.sing() fonksiyonunu test etmek olsaydı, bu dependency injection olurdu.
+        Dependency musician artık band ve instrument sınıflarına bağımlı, bu bağımlı olduğu sınıfları otomatikmen initialize eden
+        bizim initialize etmemize gerek bırakmayan, gerektiğinde bizim sınıflarımızla değil dış kütüphane sınıflarının objelerini de
+        otomatik olarak initialize edip bunları kullanmamızı sağlayan tekniğe dependency injection denir. Bunun için kullanacağımız
+        frameworke de Hilt diyoruz.
+
+        Hilt in kod sürecini başlatmak için bir annotation a ihtiyacı vardır. Bu annotation @HiltAndroidApp annotation dır.
+        Bu annotation uygulamanın Application sınıfına eklenir. Bu annotation uygulamanın Hilt tarafından yönetileceğini belirtir.
+        Sonrasında Manifest dosyasında application etiketinin içine android:name=".HiltApplication" şeklinde bir değişiklik yapılır.
+        Artık çalışacağından emin olabiliriz.
+
+        ikinci yapacağımız şey ise, entry point oluşturmak. Bu entry point uygulamanın hangi sınıfının başlangıç noktası olacağını
+        belirtir. Bu sınıfın içine @AndroidEntryPoint annotation ı eklenir. Bu annotation uygulamanın başlangıç noktasını belirtir.
+
+        Artık injectiona başlayabiliriz. İki çeşit injection vardır. Field injection ve Constructor injection. Field injection
+        kullanımı daha kolaydır. Constructor injection ise daha güvenlidir. Field injection da bir sınıfın içindeki değişkenlere
+        @Inject annotation ı eklenir. Constructor injection da ise sınıfın constructor ına @Inject annotation ı eklenir.
+        //Field injection
+            @Inject
+            lateinit var lars : Musician
+
+
+        Component scopes : Hilt in bir diğer özelliği de component scopes. Bu özellik sayesinde bir sınıfın yaşam döngüsü
+        belirlenebilir. Bu sayede bir sınıfın yaşam döngüsü belirlenirken, bu sınıfın bağımlı olduğu sınıfların da yaşam döngüsü
+        belirlenmiş olur. Bu sayede memory leak gibi sorunlar yaşanmaz. Bu component scopes lar şunlardır :
+        Singleton : Uygulama boyunca yaşayan bir sınıf oluşturmak için kullanılır. Bütün kapsamlarda çalışır.
+
+
