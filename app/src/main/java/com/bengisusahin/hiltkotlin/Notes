@@ -34,4 +34,29 @@ Dependency Injection
         belirlenmiş olur. Bu sayede memory leak gibi sorunlar yaşanmaz. Bu component scopes lar şunlardır :
         Singleton : Uygulama boyunca yaşayan bir sınıf oluşturmak için kullanılır. Bütün kapsamlarda çalışır.
 
+        İki çeşit module uygulama şeklimiz var. Biincisi @Bind annotation ı ile oluşturulan module. İkincisi ise @Provides annotation ı
+        ile oluşturulan module.
+
+        ÖRnek kod olarak önce @Binds annotation ı ile oluşturulan module ları görelim.
+        @InstallIn(ActivityComponent::class)
+        @Module
+        abstract class MyModule{
+            @ActivityScoped
+            @Binds
+            abstract fun bindingFunction(myImplementor: InterfaceImplementor) : MyInterface
+        }
+
+        Şimdi de @Provides annotation ı ile oluşturulan module ları görelim.
+
+        @InstallIn(SingletonComponent::class)
+        @Module
+        class MyModule{
+            @Singleton
+            @Provides
+            fun providerFunction() : MyInterface{
+                return InterfaceImplementor()
+            }
+
+        }
+
 
